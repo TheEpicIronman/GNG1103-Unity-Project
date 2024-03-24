@@ -125,14 +125,37 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 
         private void Update()
+{
+    // Toggle mouse lock state when 'E' key is pressed
+    if (Input.GetKeyDown(KeyCode.E))
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
         {
-            RotateView();
-
-            if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
-            {
-                m_Jump = true;
-            }
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
+    // Default mouse lock behavior
+    if (!Input.GetKey(KeyCode.E) && Cursor.lockState != CursorLockMode.Locked)
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    RotateView();
+
+    if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
+    {
+        m_Jump = true;
+    }
+}
+
 
 
         private void FixedUpdate()
